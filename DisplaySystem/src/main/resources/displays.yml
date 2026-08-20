@@ -1,0 +1,117 @@
+lobby:
+  world: lobby
+  require-auth: true
+  click-cooldown-ms: 500
+
+animation:
+  tick-interval: 5
+
+rtp:
+  enabled: true
+  anchor:
+    x: 4
+    y: 65
+    z: 6
+  title: '&b&lRTP'
+  subtitle: '&7Clique para viajar'
+  display-offset-y: 1.35
+  text-offset-y: 2.45
+  scale: 0.85
+  visual-type: ITEM
+  material: ENDER_PEARL
+  interaction-offset-y: 1.80
+  interaction-width: 1.60
+  interaction-height: 2.60
+  rotation-speed-deg-per-second: 55.0
+  bob-height: 0.16
+  bob-speed: 0.55
+  action:
+    type: COMMAND
+    value: 'rtp'
+
+continuar:
+  enabled: true
+  anchor:
+    x: -4
+    y: 65
+    z: 6
+  title: '&d&lCONTINUAR'
+  subtitle: '&7Volte para sua aventura'
+  display-offset-y: 1.35
+  text-offset-y: 2.45
+  scale: 0.85
+  visual-type: ITEM
+  material: COMPASS
+  interaction-offset-y: 1.80
+  interaction-width: 1.60
+  interaction-height: 2.60
+  rotation-speed-deg-per-second: 45.0
+  bob-height: 0.14
+  bob-speed: 0.50
+  action:
+    type: COMMAND
+    value: 'continuar'
+
+tops:
+  ovo:
+    enabled: true
+    anchor:
+      x: 3
+      y: 65
+      z: 10
+    title: '&6&l🥚 TOP OVO'
+    subtitle: '&7Mais tempo com o Ovo do Dragão'
+    text-offset-y: 1.65
+    scale: 0.90
+    interaction-offset-y: 2.80
+    interaction-width: 3.40
+    interaction-height: 4.20
+    update-interval-seconds: 60
+    status-update-interval-seconds: 5
+    max-visible: 5
+    gui-limit: 100
+    action:
+      type: RANKING
+      value: 'ovo'
+
+  dinheiro:
+    enabled: true
+    anchor:
+      x: 0
+      y: 65
+      z: 10
+    title: '&e&l💰 TOP DINHEIRO'
+    subtitle: '&7Jogadores mais ricos'
+    text-offset-y: 1.65
+    scale: 0.90
+    interaction-offset-y: 2.50
+    interaction-width: 3.20
+    interaction-height: 3.60
+    update-interval-seconds: 60
+    status-update-interval-seconds: 60
+    max-visible: 5
+    gui-limit: 100
+    action:
+      type: RANKING
+      value: 'dinheiro'
+
+  clas:
+    enabled: true
+    anchor:
+      x: -3
+      y: 65
+      z: 10
+    title: '&b&l🛡 TOP CLÃS'
+    subtitle: '&7Clãs mais bem colocados'
+    text-offset-y: 1.65
+    scale: 0.90
+    interaction-offset-y: 2.50
+    interaction-width: 3.20
+    interaction-height: 3.60
+    update-interval-seconds: 60
+    status-update-interval-seconds: 60
+    max-visible: 5
+    gui-limit: 100
+    action:
+      type: RANKING
+      value: 'clas'
