@@ -4,10 +4,12 @@ title [MineZone] Servidor Oficial
 mode con: cols=80 lines=18
 color 0F
 
-rem Chamado automaticamente pelo comando /restart do Paper.
+rem Supervisor do servidor. No spigot.yml, use:
+rem restart-script: ./restart.bat
+rem O restart.bat cria o marcador que diferencia /restart de um "stop" normal.
 if /i "%~1"=="restart" (
-    > ".minezone-restart" echo restart
-    exit /b 0
+    call "%~dp0restart.bat"
+    exit /b %errorlevel%
 )
 
 if not exist server.jar (
