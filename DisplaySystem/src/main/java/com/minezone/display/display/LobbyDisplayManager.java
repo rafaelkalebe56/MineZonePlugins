@@ -4,6 +4,8 @@ import com.minezone.display.DisplaySystemPlugin;
 import com.minezone.display.animation.AnimationManager;
 import com.minezone.display.config.DisplayConfig;
 import com.minezone.display.config.DisplayDefinition;
+import com.minezone.display.event.EventDisplayText;
+import com.minezone.display.hook.EventHook;
 import com.minezone.display.ranking.RankingEntry;
 import com.minezone.display.ranking.RankingManager;
 import com.minezone.display.ranking.RankingSnapshot;
@@ -33,18 +35,22 @@ public final class LobbyDisplayManager {
     private final DisplayRegistry registry;
     private final RankingManager rankingManager;
     private final AnimationManager animationManager;
+    private final EventHook eventHook;
     private final Set<DisplayId> warnedMissingWorld = EnumSet.noneOf(DisplayId.class);
+    private long nextEventStatusUpdate;
 
     public LobbyDisplayManager(DisplaySystemPlugin plugin,
                                DisplayConfig config,
                                DisplayRegistry registry,
                                RankingManager rankingManager,
-                               AnimationManager animationManager) {
+                               AnimationManager animationManager,
+                               EventHook eventHook) {
         this.plugin = plugin;
         this.config = config;
         this.registry = registry;
         this.rankingManager = rankingManager;
         this.animationManager = animationManager;
+        this.eventHook = eventHook;
     }
 
     public void start() {
@@ -65,6 +71,7 @@ public final class LobbyDisplayManager {
         registry.removeAll();
         registry.cleanupOwnedEntities();
         warnedMissingWorld.clear();
+        nextEventStatusUpdate = 0L;
         rebuildAll();
         animationManager.restart();
     }
@@ -97,7 +104,8 @@ public final class LobbyDisplayManager {
         DisplayBundle bundle = new DisplayBundle(id, visual, text, interaction);
         registry.register(bundle);
 
-        if (id.isRanking()) updateRanking(id.rankingType());
+        if (id == DisplayId.EVENTOS) updateEventStatus(true);
+        else if (id.isRanking()) updateRanking(id.rankingType());
         else {
             String raw = staticText(definition);
             bundle.updateText(raw, TextUtil.component(raw));
@@ -205,6 +213,21 @@ public final class LobbyDisplayManager {
             }
             if (bundle == null || !bundle.isValid()) rebuild(id);
         }
+        updateEventStatus(false);
+    }
+
+    private void updateEventStatus(boolean force) {
+        long now = System.currentTimeMillis();
+        if (!force && now < nextEventStatusUpdate) return;
+
+        DisplayDefinition definition = config.get(DisplayId.EVENTOS);
+        nextEventStatusUpdate = now + definition.statusUpdateIntervalSeconds() * 1000L;
+        if (!definition.enabled()) return;
+
+        DisplayBundle bundle = registry.get(DisplayId.EVENTOS);
+        if (bundle == null || !bundle.isValid()) return;
+        String raw = EventDisplayText.format(definition.title(), definition.subtitle(), eventHook.snapshot());
+        bundle.updateText(raw, TextUtil.component(raw));
     }
 
     private String staticText(DisplayDefinition definition) {

@@ -7,6 +7,7 @@ import com.minezone.display.ranking.RankingManager;
 import com.minezone.display.ranking.RankingSnapshot;
 import com.minezone.display.ranking.RankingType;
 import com.minezone.display.util.TextUtil;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
@@ -128,12 +129,12 @@ public final class RankingGUIService implements Listener {
             case 3 -> "&c🥉 #3 ";
             default -> "&e#" + position + " ";
         };
-        meta.setDisplayName(TextUtil.color(prefix + "&f" + entry.name()));
-        List<String> lore = new ArrayList<>();
+        meta.displayName(TextUtil.color(prefix + "&f" + entry.name()));
+        List<Component> lore = new ArrayList<>();
         if (!entry.valueText().isBlank()) lore.add(TextUtil.color("&7Valor: " + entry.valueText()));
         for (String line : entry.lore()) lore.add(TextUtil.color(line));
         if (position <= 3) lore.add(TextUtil.color("&8Destaque do pódio"));
-        meta.setLore(lore);
+        meta.lore(lore);
     }
 
     private ItemStack infoItem(RankingType type, RankingSnapshot snapshot, int available, int page, int pages) {
@@ -156,8 +157,8 @@ public final class RankingGUIService implements Listener {
     private ItemStack simple(Material material, String name, List<String> lore) {
         ItemStack item = new ItemStack(material);
         ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(TextUtil.color(name));
-        if (lore != null && !lore.isEmpty()) meta.setLore(lore.stream().map(TextUtil::color).toList());
+        meta.displayName(TextUtil.color(name));
+        if (lore != null && !lore.isEmpty()) meta.lore(lore.stream().map(TextUtil::color).toList());
         item.setItemMeta(meta);
         return item;
     }

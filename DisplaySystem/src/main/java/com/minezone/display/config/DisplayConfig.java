@@ -23,6 +23,7 @@ public final class DisplayConfig {
     static {
         DEFAULT_ANCHORS.put(DisplayId.RTP, new DefaultAnchor("lobby", 4, 65, 6));
         DEFAULT_ANCHORS.put(DisplayId.CONTINUAR, new DefaultAnchor("lobby", -4, 65, 6));
+        DEFAULT_ANCHORS.put(DisplayId.EVENTOS, new DefaultAnchor("lobby", 0, 65, 6));
         DEFAULT_ANCHORS.put(DisplayId.TOP_OVO, new DefaultAnchor("lobby", 3, 65, 10));
         DEFAULT_ANCHORS.put(DisplayId.TOP_DINHEIRO, new DefaultAnchor("lobby", 0, 65, 10));
         DEFAULT_ANCHORS.put(DisplayId.TOP_CLAS, new DefaultAnchor("lobby", -3, 65, 10));
@@ -72,6 +73,7 @@ public final class DisplayConfig {
         String defaultTitle = switch (id) {
             case RTP -> "&b&lRTP";
             case CONTINUAR -> "&d&lCONTINUAR";
+            case EVENTOS -> "&6&l⚡ EVENTOS";
             case TOP_OVO -> "&6&l🥚 TOP OVO";
             case TOP_DINHEIRO -> "&e&l💰 TOP DINHEIRO";
             case TOP_CLAS -> "&b&l🛡 TOP CLÃS";
@@ -79,13 +81,15 @@ public final class DisplayConfig {
         String defaultSubtitle = switch (id) {
             case RTP -> "&7Clique para viajar";
             case CONTINUAR -> "&7Volte para sua aventura";
+            case EVENTOS -> "&7Clique para ver os eventos";
             case TOP_OVO -> "&7Mais tempo com o Ovo do Dragão";
             case TOP_DINHEIRO -> "&7Jogadores mais ricos";
             case TOP_CLAS -> "&7Clãs mais bem colocados";
         };
 
         Material defaultMaterial = id == DisplayId.RTP ? Material.ENDER_PEARL
-                : id == DisplayId.CONTINUAR ? Material.COMPASS : Material.AIR;
+                : id == DisplayId.CONTINUAR ? Material.COMPASS
+                : id == DisplayId.EVENTOS ? Material.CLOCK : Material.AIR;
         Material material = Material.matchMaterial(yaml.getString(path + ".material", defaultMaterial.name()));
         if (material == null) material = defaultMaterial;
 
@@ -93,6 +97,7 @@ public final class DisplayConfig {
         String defaultActionValue = switch (id) {
             case RTP -> "rtp";
             case CONTINUAR -> "continuar";
+            case EVENTOS -> "evento";
             case TOP_OVO -> "ovo";
             case TOP_DINHEIRO -> "dinheiro";
             case TOP_CLAS -> "clas";
@@ -116,7 +121,8 @@ public final class DisplayConfig {
                 clampFloat((float) yaml.getDouble(path + ".bob-height", 0.15D), 0F, 4F),
                 clampFloat((float) yaml.getDouble(path + ".bob-speed", 0.5D), 0F, 10F),
                 Math.max(5, yaml.getInt(path + ".update-interval-seconds", 60)),
-                Math.max(1, yaml.getInt(path + ".status-update-interval-seconds", id == DisplayId.TOP_OVO ? 5 : 60)),
+                Math.max(1, yaml.getInt(path + ".status-update-interval-seconds",
+                        id == DisplayId.EVENTOS ? 1 : id == DisplayId.TOP_OVO ? 5 : 60)),
                 Math.max(1, Math.min(20, yaml.getInt(path + ".max-visible", 5))),
                 Math.max(10, Math.min(1000, yaml.getInt(path + ".gui-limit", 100))),
                 new DisplayAction(

@@ -67,7 +67,8 @@ public final class DisplayAdminCommand implements CommandExecutor, TabCompleter 
             return true;
         }
         if (args.length < 2) {
-            player.sendMessage(TextUtil.color("&cUse /displayadmin " + sub + " <rtp|continuar|top_ovo|top_dinheiro|top_clas>."));
+            player.sendMessage(TextUtil.color("&cUse /displayadmin " + sub
+                    + " <rtp|continuar|eventos|top_ovo|top_dinheiro|top_clas>."));
             return true;
         }
 

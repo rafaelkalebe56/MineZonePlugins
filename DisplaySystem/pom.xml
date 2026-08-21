@@ -6,7 +6,7 @@
 
     <groupId>com.minezone</groupId>
     <artifactId>DisplaySystem</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
     <packaging>jar</packaging>
     <name>DisplaySystem</name>
     <description>Sistema de displays e rankings do lobby do MineZone para Paper 1.21.11</description>

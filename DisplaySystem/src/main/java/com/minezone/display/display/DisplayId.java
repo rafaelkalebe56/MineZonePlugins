@@ -7,6 +7,7 @@ import java.util.Locale;
 public enum DisplayId {
     RTP("rtp", "rtp", null, true),
     CONTINUAR("continuar", "continuar", null, true),
+    EVENTOS("eventos", "eventos", null, true),
     TOP_OVO("top_ovo", "tops.ovo", RankingType.OVO, false),
     TOP_DINHEIRO("top_dinheiro", "tops.dinheiro", RankingType.DINHEIRO, false),
     TOP_CLAS("top_clas", "tops.clas", RankingType.CLAS, false);

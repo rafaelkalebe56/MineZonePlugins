@@ -52,6 +52,30 @@ continuar:
     type: COMMAND
     value: 'continuar'
 
+eventos:
+  enabled: true
+  anchor:
+    x: 0
+    y: 65
+    z: 6
+  title: '&6&l⚡ EVENTOS'
+  subtitle: '&7Clique para ver os eventos'
+  display-offset-y: 1.35
+  text-offset-y: 2.45
+  scale: 0.85
+  visual-type: ITEM
+  material: CLOCK
+  interaction-offset-y: 1.80
+  interaction-width: 2.20
+  interaction-height: 3.20
+  rotation-speed-deg-per-second: 35.0
+  bob-height: 0.12
+  bob-speed: 0.45
+  status-update-interval-seconds: 1
+  action:
+    type: COMMAND
+    value: 'evento'
+
 tops:
   ovo:
     enabled: true

@@ -6,7 +6,7 @@ import java.text.NumberFormat;
 import java.util.Locale;
 
 public final class FormatUtil {
-    private static final Locale PT_BR = new Locale("pt", "BR");
+    private static final Locale PT_BR = Locale.forLanguageTag("pt-BR");
     private static final ThreadLocal<DecimalFormat> MONEY = ThreadLocal.withInitial(() -> {
         DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance(PT_BR);
         DecimalFormat format = new DecimalFormat("#,##0.##", symbols);

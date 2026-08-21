@@ -7,6 +7,7 @@ import com.minezone.display.display.DisplayRegistry;
 import com.minezone.display.display.LobbyDisplayManager;
 import com.minezone.display.gui.RankingGUIService;
 import com.minezone.display.hook.AuthHook;
+import com.minezone.display.hook.EventHook;
 import com.minezone.display.hook.RankHook;
 import com.minezone.display.interaction.ActionExecutor;
 import com.minezone.display.interaction.InteractionManager;
@@ -33,6 +34,7 @@ public final class DisplaySystemPlugin extends JavaPlugin {
 
         AuthHook authHook = new AuthHook();
         RankHook rankHook = new RankHook();
+        EventHook eventHook = new EventHook();
 
         rankingManager = new RankingManager(this, displayConfig, List.of(
                 new EggRankingProvider(),
@@ -43,7 +45,8 @@ public final class DisplaySystemPlugin extends JavaPlugin {
         actionExecutor = new ActionExecutor(this, rankingGUI);
         DisplayRegistry registry = new DisplayRegistry(this);
         AnimationManager animationManager = new AnimationManager(this, displayConfig);
-        lobbyDisplayManager = new LobbyDisplayManager(this, displayConfig, registry, rankingManager, animationManager);
+        lobbyDisplayManager = new LobbyDisplayManager(
+                this, displayConfig, registry, rankingManager, animationManager, eventHook);
         InteractionManager interactions = new InteractionManager(displayConfig, registry, authHook, actionExecutor);
 
         Bukkit.getPluginManager().registerEvents(rankingGUI, this);
@@ -64,7 +67,7 @@ public final class DisplaySystemPlugin extends JavaPlugin {
         lobbyDisplayManager.start();
         rankingManager.start();
 
-        getLogger().info("DisplaySystem ativado: 5 displays configuráveis, cache de rankings e interações carregados.");
+        getLogger().info("DisplaySystem ativado: 6 displays configuráveis, cache de rankings e interações carregados.");
     }
 
     @Override
