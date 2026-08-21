@@ -23,6 +23,8 @@ public final class EconomyRankingProvider implements RankingProvider {
 
     @Override public RankingType type() { return RankingType.DINHEIRO; }
 
+    @Override public boolean loadsAsynchronously() { return true; }
+
     @Override public boolean isAvailable() {
         Plugin plugin = Bukkit.getPluginManager().getPlugin("EconomySystem");
         if (plugin == null || !plugin.isEnabled()) return false;
@@ -30,7 +32,7 @@ public final class EconomyRankingProvider implements RankingProvider {
     }
 
     @Override public List<RankingEntry> load(int limit) throws Exception {
-        if (!isAvailable()) return List.of();
+        if (manager == null) return List.of();
         Object raw = getTopBalances.invoke(manager, Math.max(1, limit));
         if (!(raw instanceof List<?> list)) return List.of();
         List<RankingEntry> result = new ArrayList<>(list.size());
